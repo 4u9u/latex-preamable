@@ -1,0 +1,139 @@
+\ProvidesPackage{preamble}
+
+
+\usepackage[utf8]{inputenc}
+\usepackage[top=0.75in, bottom=1.25in, left=1in, right=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts} %this is THE math package
+
+
+\usepackage{mathtools} %an extension to the amsmath package that helps you write more beautiful math
+\usepackage{enumitem} %for better control of your lists
+\usepackage[hidelinks]{hyperref} %for hyperlinking stuff
+\usepackage{xurl}
+\usepackage{multirow} % for making better charts
+\usepackage{tikz} %for drawings
+\usepackage{quiver}
+
+\usetikzlibrary{shapes.geometric}
+
+\usepackage{widebar} %diy package for a wider overbar bar
+
+
+\usepackage{graphicx}
+
+\makeatletter
+\providecommand*{\Dashv}{%
+  \mathrel{%
+    \mathpalette\@Dashv\vDash
+  }%
+}
+\newcommand*{\@Dashv}[2]{%
+  \reflectbox{$\m@th#1#2$}%
+}
+\makeatother
+
+
+
+\usepackage[backend=biber,style=numeric,sorting=ynt]{biblatex} %Imports biblatex package
+\addbibresource{bib.bib} %Import the bibliography file
+
+% \printbibliography to make bibliography
+
+
+\usepackage{graphicx} %for pictures
+\graphicspath{ {./images/} } %for pictures
+%     \begin{center}\includegraphics[scale=.30]{./images/twist.png}\end{center} sample picture code
+
+
+
+%makes over equals sign thing
+\newcommand{\overeq}[1]{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily #1}}}{=}}}
+
+
+\theoremstyle{definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{corollary}[thm]{Corollary}
+\newtheorem{eg}[thm]{Example}
+\newtheorem{ex}[thm]{Exercise}
+
+
+
+\newtheoremstyle{mystyle}
+{\topsep}{\topsep}{\normalfont}{}{\normalsize\bfseries}{}{0em}
+{\thmname{#1}\thmnumber{ #2.}\ }
+\theoremstyle{mystyle}
+\newtheorem{prob}{Problem}
+\newtheorem{exer}{Exercise}
+
+
+%%new math command stuff
+\makeatletter
+\DeclareDocumentCommand{\newmathcommand}{ m O{0} m }{%
+  % Check whether command is robust or not (https://tex.stackexchange.com/a/63734/5764)
+  \ifcsname\expandafter\@gobble\string#1\space\endcsname
+    % Command is robust
+    \expandafter\expandafter\expandafter\let\expandafter\csname old\string#1\expandafter\endcsname\expandafter=\csname\expandafter\@gobble\string#1\space\endcsname
+  \else
+    % Command is not robust
+    \expandafter\let\csname old\string#1\endcsname=#1
+  \fi
+  \expandafter\newcommand\csname new\string#1\endcsname[#2]{#3}
+  \DeclareRobustCommand#1{%
+    \ifmmode
+      \expandafter\let\expandafter\next\csname new\string#1\endcsname
+    \else
+      \expandafter\let\expandafter\next\csname old\string#1\endcsname
+    \fi
+    \next
+  }%
+}
+\makeatother
+%%%end of new math command stuff
+
+
+
+
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\Pl}{\mathbb{P}}
+\renewcommand{\S}{\mathbb{S}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\set}[2]{\left\{ #1 :  #2 \right\}}
+\newcommand{\seten}[1]{\bigl\{ #1 \bigl\}}
+\newcommand{\p}[1]{\left( #1 \right)}
+\newcommand{\ito}{\xrightarrow{\sim}}
+\newcommand{\norm}{\unlhd}
+\DeclareMathOperator{\stab}{Stab}
+\newcommand{\fix}[2]{\mathrm{Fix}_{#1}(#2)}
+\newcommand{\X}{\mathfrak{X}}
+\newcommand{\gl}{\mathfrak{gl}(n,\R)}
+\newcommand{\glc}{\mathfrak{gl}(n,\C)}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\GLC}{\mathrm{GL}(n,\C)}
+\DeclareMathOperator{\lie}{Lie}
+\let\oldbar=\bar
+\renewcommand{\bar}[1]{\widebar{#1}}
+\newenvironment{abc}{\begin{enumerate}[label=(\alph*)]}{\end{enumerate}}
+\newcommand{\phio}{\phi}
+\renewcommand{\phi}{\varphi}
+\newmathcommand{\~}[1]{\Tilde{#1}}
+\DeclareMathOperator{\img}{img}
+\DeclareMathOperator{\spn}{span}
+
+%partials ad nausium
+\newcommand{\pp}[1]{\frac{\partial}{\partial #1}}
+\newcommand{\pf}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\dd}[1]{\frac{d}{d #1}}
+\newcommand{\df}[2]{\frac{d #1}{d #2}}
+

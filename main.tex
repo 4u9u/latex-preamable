@@ -1,0 +1,568 @@
+\documentclass[draft]{amsart}
+\usepackage{preamble}
+\usepackage{xeCJK}
+\usepackage{skull}
+\title[The \(\R\)-Tree of \(\R_\rho^2\)]{The \(\R\)-Tree of \(\R_\rho^2\) \\ Senior Thesis}
+\author{August Dym Noë}
+
+
+
+%\date{} %delete coment to remove date
+
+\DeclareMathOperator{\inv}{inv}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\lat}{Latt}
+\newcommand{\latt}{\lat(\mathfrak o,\R_\rho)}
+%end cookie cutter preamble
+
+\newcommand{\llangle}{\langle \hspace{-.25em}\langle}
+\newcommand{\rrangle}{\rangle \hspace{-.25em}\rangle}
+
+
+
+\usepackage{fontenc}
+\DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\PGL}{PGL}
+\newcommand{\EL}{\mathcal{L}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\U}{\mathcal{U}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\Po}{\mathcal{P}}
+\DeclareMathOperator{\st}{st}
+\newcommand{\note}[1]{{\color{red}{ Note: #1}}}
+\begin{document}
+
+\begin{abstract}
+Blah Blah Blah
+    \tableofcontents
+\end{abstract}
+\maketitle
+
+
+
+\section{Introduction}
+\section{Asymptotic Real Numbers}
+    It turns out that \(^*\R\) is too large for our purposes. It's infinite elements are too big, and its infinitesimals are too small. So we turn to the field \(\R_\rho\), first studied by Abraham Robinson \cite{ARobinson1973}, and presented by Robinson alongside his student A.H. Lightstone their 1975 monograph  \textit{Nonarchimedean Fields and Asymptotic Expansions} \cite{Lightstone_Robinson_1975}.  It has the advantage of being non-archimedean, but by ``shaving off'' those elements which are too big and too small, we end up with something far more wieldy---and crucially---its valuation can detect `finiteness'. 
+\subsection{Construction}
+    Fix some positive non-zero infinitesimal \(\rho\in {^*\R}\). Define
+    \[\mathfrak{i}:=\set{x\in {^*\R}}{\forall n\in \N,\ |x|<\rho^n}\]
+    and
+    \[\mathfrak r:=\set{x\in {^*\R}}{\exists n\in \N,\  |x|<\rho^{-n}}\]
+    It is easy to see that \(\mathfrak{r}\) is a subring of \(^*\R\) and \(\mathfrak{i}\) is an ideal of \(\mathfrak{r}\).
+    \begin{defn}\label{defn:asymptotic-reals}
+        We define the \textbf{asymptotic reals} \( \R_\rho \) to be \(\mathfrak r/ \mathfrak i\).
+    \end{defn}
+    \begin{lemma}\label{lemma:maximal-ideal-m-in-n}\(\mathfrak{i}\) is a maximal ideal of \(\mathfrak{r}\).
+    \end{lemma}
+    \begin{proof}
+            Assume \(\mathfrak i \subsetneq I\subsetneq \mathfrak r\) is proper ideal of \(\mathfrak r\). Take \(a\in I-\mathfrak i\). By assumption, there is some \(n\in \N\), such that \(|a|\ge \rho^n\). We can assume \(a\) is positive as ideals are closed under negation so \(a^{-1}\le \rho^{-n}\) so by definition, \(a^{-1}\in \mathfrak r\), giving us that \(1=aa^{-1}\in I\) and were are done.
+        \end{proof}
+    \begin{corollary}
+    \( \R_\rho \) is a field.
+    \end{corollary}
+\subsection{First properties and Non-Archimedean Valuation}
+MUST DECIDE WHICH PROPERTIES ARE WORTH ADDING, KEEP TRACK OF WHAT I USE! REAL CLOSED? 
+
+
+    \( \R_\rho \) is in fact a non-archimedean valued field. We define \(\nu: \R_\rho \to \R\cup \{\infty\}\) by \(\nu([a])=\st \p{\log_\rho |a|}\) for \(a\ne 0\) and \(\nu(0)=\infty\).  Going forward, we usually drop brackets at the following propistion will justify, but before we prove well definedness and that \(\nu\) is in fact a valuation, we should explain what \(\log_\rho\) even means. The power of the hyperreals are that they satisfy why is called The Transfer Principle. Put simply, given a function (or sequence, subset, relation, etc...) on \(\R\) which is definable by a first order sentence in a sufficiently complex language, one can extend it to \(^*\R\) in a very behaved way. The complete statement of the theorem is given as Corollary \ref{cor:transfer} in Appendix \ref{section:ConstTheHRs}. See chapter 4.5 of \cite{Goldblatt_1998} or INSERT PAGE REFERENCE OF \cite{Lightstone_Robinson_1975}.
+
+
+    \begin{prop}\label{prop:wellDefOfVal}
+        \(\nu\) is well defined. That is for any \(a,b\in [a]\in \R_\rho\), we have\(\log_\rho|a|=\log_\rho |b|\).
+    \end{prop}
+    \begin{proof}
+        FILL IN HERE
+    \end{proof}
+
+    \begin{prop}\label{prop:nuIsVal}
+        \(\nu\) is a non-archimedean valuation.
+    \end{prop}
+    \begin{proof}
+        FILL IN HERE
+    \end{proof}
+    FIND SOMEWHERE TO DEFINE \(\simeq\) (infinitely close)
+
+    
+    The valuation ring, \(\mathfrak{o}\) of \(\nu\) is precisely 
+    \[\mathfrak o =\set{x\in  \R_\rho }{\nu(x)\ge 0}=\set{x\in  \R_\rho }{|x|_\nu \le 1}\]
+    with maximal ideal \(\mathfrak p\) given by
+    \[\mathfrak p = \set{x\in \mathfrak  \R_\rho }{\nu(x) >0}\]
+    In other words, \(\mathfrak p \) is the ideal \(x\in  \R_\rho \) with \(\st \p{\log_\rho | x |}>0\). Morally , \(\mathfrak o \setminus \mathfrak p\) are the elements of \(\mathfrak o\) which are insignificant compared to \(\rho\). ``\(\nu(x)=0\)'' is saying if \(x\) is an infinitesimal, then it is much greater than \(\rho\); if \(x\) is infinite, it is much smaller than \(\rho^{-1}\). And of course---as the following proposition will show---any finite number is insignificant next to \(\rho\).
+    \begin{prop}\label{prop:RAlgebra}
+        \(\R_\rho\) is an \(\R\)-algebra with injective structure homomorphism \(\varphi\) and furthermore, for any \(x\in \R\), \(\nu(x)=0\), so \(\varphi(\R)\subseteq \mathfrak o \). 
+    \end{prop}
+    We note here that due to this embedding of \(\R\) into \(\R_\rho\) with its \(\R\)-algebra structure, we associate \(\R\) with its image under \(\varphi\). The proof of the above is the last time we will call attention to the distinction.
+    \begin{proof}
+        First note that \(\R\) embeds into \(^*\R\) via \(r\mapsto [(r,r,\dots )]\), i.e. the map sending a real to its constant sequence. See Appendix \ref{section:ConstTheHRs} for more details. We define \(\phi\) as the composition of this embedding  with the quotient homomorphism \(^*\R \twoheadrightarrow \R_\rho\). \(\phi(1)=1\), thus it is not the \(0\) map, and as a morphism between fields it is necessarily injective. Now \(a\ne 0\in \mathrm {im} \varphi\). Without loss of generality assume \(a>0\). Then \(\log_x(a)\to 0\) as \(x\to 1\) (here we mean the true log function, defined on the reals, and we associate \(a\) with it's preimage). By the Transfer Principle for any infinitesimal---and so specifically for \(\rho\)---we have \(\log_x(a)\simeq 0 \). Taking standard parts gives us \(\nu(a)=0\).
+    \end{proof}
+    As with any valued field with real-valued valuation, we also obtain a non-archimedean absolute value \(|\cdot |_\nu\) defined by \(|x |_\nu:=e^{-\nu (x)}\). 
+    \begin{thm}\label{thm:completeMetric}
+        \(\R_\rho\) is complete with respect to \(|\cdot |_\nu\)
+    \end{thm}
+    MAYBE OMMIT PROOF OF THIS AND MAKE CITATION, PROOF LONG, NOT STRICTLY NECESSARY
+    \begin{prop}
+        \(\R_\rho\) is a real closed. 
+    \end{prop}
+    \begin{proof}
+        We use the classification of real closed wherein \(\R_\rho\) is real closed if the Intermediate Value Theorem hold for all polynomials of degree \(\ge 0\), so let \(p(x)\in \R_\rho[x]\) be as described, with \(d:=\deg(p)\). Let \(\alpha ,\beta ,\gamma \in \R_\rho\) and \(p(\alpha)< \gamma < p(\beta )\). By defining \(p'(x,a_0,\dots,a_{d}):=a_0+a_1x+a_2x^2+\dots+a_dx^d\) in \(d+2\) indeterminates, we can use the Transfer Principle to show \(^*\R\) satisfies the the Intermediate Value Theorem. Let \(q\in {^*\R}[x]\) be the polynomial obtained by associating the coefficients of \(p\) with one of their representatives. Then there is some \(a \in {^*\R}\) such that \(q(a)\in \gamma\). As \(a\) is bounded by representatives of elements of \(\R_\rho\), it will be similar to an element of \(\R_\rho\). So as the quotient map respects ring operations, \(p([a])=\gamma\), and we are done.
+    \end{proof}
+    NOTE: THIS IS ONE OF THE ONLY TIMES I MAKE REFERENCE OF THE FACT THAT THE ELEMENTS OF \(\R_\rho\) ARE EQUIV CLASSES, IS THIS CLEAR?
+    \begin{lemma}\label{lemma:generatorOfIdeal}
+        The ideal \(\mathfrak p\) is the ideal generated by \(\set{ \rho^x \ }{\ x\in \R_{>0}}\), which we sometimes write \(\rho^\R\). FINISHFINISHFINISH
+    \end{lemma}
+
+    WAIT SOMETHING IS WRONG HERE THE NOTATION IN EITHER THE ABOVE OR BELOW IS WRONG! NEGATIVE VALUATIONS!
+    \begin{proof}
+        Take \(a\in \mathfrak p\), i.e. \(\st \p{\log_\rho |a|}>0\), so \(\log_\rho |a|>0\) and \(a\not \simeq 0\). This is to say \(a=\rho^rb\) with \(0<r\in \R\) and \(\nu(b)=0\). So clearly \(a\in \rho^\R\). Conversely, if \(a\in \rho^\R\), then \(a=b\rho^r\) for \(r\in \R^\times\). 
+        
+        
+        
+        
+        
+        
+        Conversely, if \(a\in \langle \rho^x \ |\ x\in \R_{>0} \rangle\), we have that \(a=\sum_{i=1}^m \rho^{r_i}b_i\) where each \(b_i\in \mathfrak o\) and \(r_i\in \R_{>0}\). As for each \(x\in \mathfrak o\), \(\nu(x)\ge 0\), we can assume each \(\nu(b_i)=0\) and \(r_i>0\) at there is at least one \(i\) with \(r_i\not \simeq 0\). FINISH THIS 
+        
+    \end{proof}
+
+
+    
+
+    \begin{lemma}\label{lemma:rhoRisProduct}
+    \[\R_\rho^\times=\rho^\R \cdot \mathfrak  o^\times\]
+    \end{lemma}
+    \begin{proof}
+        Clearly \(\rho^\R \cdot \mathfrak o ^\times \subseteq \R_\rho^\times\). Now take some \(x\in \R_\rho^\times\) with \(\nu(x)=r\). See that 
+        \[\nu(x\rho^{-r})=\nu(x)+\nu(\rho^{-r})=r-r=0\]
+        thus \(x\rho^{-r}\in \mathfrak o^\times\), so \(x=x\rho^{-r}\rho^r\in \rho^\R \cdot \mathfrak o ^\times\).
+    \end{proof}
+    
+\section{Lattices, Homothety, and Distance }
+    Here we aim to mirror the construction of the Bruhat-Tits Tree for discrete valuation rings done by Casselman \cite{Casselman2014TheBT}. As \(\mathfrak p=\rho^\R\) is not principal, the tree is the wrong object of consideration, but more on this later. For now we turn our attention to the lattice.
+
+\subsection{Lattices}
+    \begin{defn}\label{def:lattice}
+    A \textbf{lattice} in \( \R_\rho ^2\) is a finitely generated \(\mathfrak o\)-submodule that spans \( \R_\rho ^2\) as a \( \R_\rho \)-vector space.
+\end{defn}
+
+
+    USE \(\mathfrak o\)-column NOTATION!!!
+    \begin{prop}\label{prop:latticesAreFree} Every lattice in \(\R^2_\rho\) is free over \(\mathfrak o\) of rank \(2\). 
+\end{prop}
+    \begin{proof}
+    Let \(L\) be a lattice as described above. Choose \(m\) generators and let \(M_L\) be the \(2\times m\) matrix whose columns are are those generators. The lattice \(L\) generated by the columns of \(M_L\) will not not be affected by right multiplication by matrices in \(\GL_2{(\mathfrak o)}\) or left multiplication by matrices in \(\GL_m{(\mathfrak o)}\) as these  amount to a change of basis in \(\R_\rho^2\). We can view these as row and column operations allowing ourselves to only elements of \(\mathfrak o^\times \) to scale rows and columns and \(\mathfrak o\) when scaling add adding to another row or column.
+    
+    First, as \(L\) spans \(\R^2_\rho\), there must be at least one non-zero entry in the top row. One of the entries of top row will have minimal valuation, say \(r\). We can permute the rows to have this entry in the top left corner. By Lemma \ref{lemma:rhoRisProduct}, we can scale each column so the top entry of the \(i\)th column is of the form \(\rho^{r_i}\) for \(r_i\in \R\) with \(r_1\le r_i\) for each \(i\ge 1\). For each \(i\)th row, we then can add the first row scaled by \(-\rho^{r_i-r_1}\), to arrive at \(0\)s in each but the leftmost entry of the top row. We are safe in doing this \(r_i\ge r_1\) implies that \(\nu\p{\rho^{r_i-r_1}}\ge 0\) so \(\rho^{r_i-r_1}\in \mathfrak 0\).
+
+    In the same way as above, we can ensure that all but the two leftmost entries in the bottom row are non-zero. In this way we see the only non-zero columns are the first two, which are of the form
+    \[\begin{bmatrix}
+        \rho^r & 0\\ *\rho^t & \rho^s
+    \end{bmatrix}\]
+    For \(r,s,t\in \R^\times\). The bottom left corner may be 0. Going forward we write \(*\rho^t\) for \(u\rho^t\) where \(u\in \mathfrak o^\times\). These two columns are clearly linearly independent thus concluding the proof. 
+    \end{proof}
+
+    \begin{prop}\label{prop:normalFormMatrices}
+        Given \(g\in \GL_2(\R_\rho)\), there exist \(k_1,k_2\in \GL_2(\mathfrak o)\) and a unique diagonal matrix
+        \[d=\begin{bmatrix}
+            \rho^r & 0 \\ 0 & \rho ^s
+        \end{bmatrix}\]
+         with \(r\le s\) such that \(g=k_1gk_2\).
+    \end{prop}
+    \begin{proof}
+        The proof is very close to that of Proposition \ref{prop:latticesAreFree}. We begin by using \(\mathfrak o\)-column operations and \(\mathfrak o\)-row operations---which amount to multiplying \(d\) on the left and right respectively by elements of \(\GL_2(\mathfrak o)\)---to arrive at the form shown at the end of Proposition \ref{prop:latticesAreFree}. We can use row swapping to ensure the element of minimal valuation is in the top left corner. Using the labels above, the top row, scaled appropriately, can be subtracted from the bottom row arriving at our desired form.
+
+        As for uniqueness, \(\det(g)=\det(k_1)\det(d)\det(k_2)\). As each \(\mathfrak 0\)-row or column operation has a unit determinate, \(\det(g)=\rho^{r+s}\). The greatest common divisor of the entries of \(g\) is \(*\rho^r\). I AM NOT CONFIDENT ABOUT THE UNIQUENESS ARGUMENT
+    \end{proof}
+
+    \begin{corollary}[Principal divisor theorem]\label{cor:PDT} If \(L\) and \(M\) are two lattices, then there is a basis \((e,f)\) of \(L\) and real numbers \(r\le s\) such that \((\rho^re,\rho^s f)\) is a basis of \(L\).
+    \end{corollary}
+    \begin{proof}
+        We take \(L\) and \(M\) to be given by invertible matrices of rank \(2\), \(\lambda\) and \(\mu\) respectively and choose a coordinate system such that \(L=\mathfrak o^2\), i.e. we replace \(\lambda\) with \(I_2\) and \(\mu\) with \(\lambda^{-1}\mu\). We apply the previous proposition so \(\lambda^{-1}\mu=k_1dk_2\). The columns of \(k_1\) will form a basis of \(L=\mathfrak o^2\) the columns of \(\lambda^{-1}\mu k_2^{-1}\) will form a basis of \(M\).
+    \end{proof}
+
+    
+    \begin{defn} \label{def:subGrpOfSL}
+        We define the following subgroups of \(\GL_2(\R_\rho)\)
+        \[\mathcal T := \set{\begin{bmatrix}
+            a^{-1} & 0 \\ 0 & a
+        \end{bmatrix} }{a\in \R_\rho^\times} \quad \text{and} \quad \mathcal D:= \set{\begin{bmatrix}
+            \rho^{-r} & 0 \\ 0 & \rho^r
+        \end{bmatrix}}{r\in \R}\]
+        and cones
+        \[\mathcal A^{++} := \set{\begin{bmatrix}
+            \rho^r & 0 \\ 0 & \rho^s
+        \end{bmatrix} }{r,s\in \R,\ s\ge r} \quad \text{and} \quad \mathcal D^{++}:= \set{\begin{bmatrix}
+            \rho^{-r} & 0 \\ 0 & \rho^{r}
+        \end{bmatrix}}{r\ge 0 \in \R}\]
+        The \(++\) notation is keeping with Casselman \cite{Casselman2014TheBT} who is is keeping with Ian Macdonald.
+    \end{defn}
+    \begin{prop}
+        We have the following decompositions:
+        \[\GL_2(\R_\rho)=\GL_2(\mathfrak o)\mathcal A^{++} \GL_2(\mathfrak o)
+        \qquad \text{and} \qquad \SL_2(\R_\rho)=\SL_2(\mathfrak o)\mathcal D^{++} \SL_2(\mathfrak o).\]
+    \end{prop}
+    \begin{proof}
+        The decomposition of \(\GL_2(\R_\rho)\) follows immediately from the Principal Divisor Theorem (\ref{cor:PDT}), henceforth refereed to as the PDT. One direction of the inclusion of the second decomposition is immediate. Conversely, take \(A\in \SL_2(\R_p)\). We have again by the PDT that \(A=k_1dk_2\) for \(k_1,k_2\in \GL_2(\mathfrak o)\) and
+        \[d=\begin{pmatrix}
+            \rho^r &0\\ 0& \rho^s
+        \end{pmatrix}\] with \(s\ge r\), thus
+        \[1=\det(A)=\det(k_1)\det(k_2)\rho^{r+s}\]
+        and as \(\det(k_1),\det(k_2)\) are units, \(r=-s\), so \(s\ge -s\). By scaling the top row of \(k_1\) by \(\det(k_2)\), and that of\(k_2\) scaled by \(\det(k_1)\), we can assume \(\det(k_1)=\det(k_2)=1\), thus arriving at our desired form, concluding the proof.
+    \end{proof}
+
+
+    The group \(\GL_2(\R_\rho)\) acts transitively on \(\R^2_\rho\), hence also on the set of lattices.
+
+
+
+    \begin{prop}
+        Let \(G\) be either \(\GL_2(\R_\rho)\) or \(\SL_2(\R_\rho)\). The stabilizer of any lattice is a bounded open subgroup. Conversely any bounded open subgroup stabilizes some lattice.
+    \end{prop}
+
+    \begin{proof}
+        Let \(L=g\mathfrak o^2\) be a lattice for \(g\in \GL_2(\R_\rho)\) Then
+        \[\stab(g\mathfrak o^2)=\set{h\in G}{hg\mathfrak o^2=g\mathfrak o^2} =\set{x\in \stab(\mathfrak o^2)}{x=g^{-1}hg}=g\stab(\mathfrak o^2) g^{-1}\]
+        Now \(\stab(\mathfrak o^2)=G(\mathfrak o)\) following from the fact that \(\stab(\mathfrak o^2)\) are precisely the elements \(x\) which form a matrix representation of \(\mathfrak o^2\), i.e. \(x\) is invertable in \(\GL_2(\mathfrak o)\), possibly of determinant 1 if \(G=\SL_2(\R_\rho)\). 
+
+        Now to show \(g G(\mathfrak o)g^{-1}\) is open, see  first that \(\mathfrak o\) is open in \(\R_\rho\), by letting \(\{c_i\}_{i\in I}\) be representatives of \(\mathfrak o / \mathfrak p\), we can write
+        \[\mathfrak o = \coprod_{i\in I}c_i+\mathfrak p\]
+        where each \(c_i+\mathfrak p\) is an open ball of radius \(1\) centered at \(c_i\). Furthermore, we show \(\mathfrak p\) is closed in \(\mathfrak o\) as by splitting again into cosets, we see
+        \[\mathfrak o \setminus \mathfrak p =\coprod_{i\in I,\ c_i \notin \mathfrak p}c_i+\mathfrak p\]
+        which is open, so we conclude \(\mathfrak o ^\times\) is open. By the continuity of the determinant, we see \(\GL_2(\mathfrak o)=\det^{-1}(\mathfrak{o}^\times)\cap \mathrm M_2(\mathfrak o)\), and is thus open in \(\mathrm M_n(\R_\rho)\), and hence also in \(\GL_2(\R_\rho)\). Clearly \(\SL_2(\mathfrak o)\) will also be under the subspace topology. It follows that \(g G(\mathfrak o)g^{-1}\) is open.
+
+        To see \(g G(\mathfrak o)g^{-1}\) is bounded, we again look at \(\GL_2(\mathfrak o)\).  Let \((a_{i,j})\) in \(GL_2(\mathfrak o)\). Taking \(a_{i,j}=*\rho^{r_{i,j}}\) and \(M=\max\{r_{1,1}+r_{2,2},\ r_{2,2}+r_{1,1}\}\) and \(m=\min\{r_{1,1}+r_{2,2},\ r_{2,2}+r_{1,1}\}\), we see  \[0=\log_\rho |{*\rho}^{r_{1,1}+r_{2,2}}-*\rho^{r_{2,1}+r_{1,2}}|=m+\log_\rho |{*\rho }^{M-m}-1|\ge \min\{m,M\}\ge 0\]
+        thus both \(|M|_\nu=|n|_\nu = 1\).  Conjugating by \(g\) will not change its boundedness. 
+
+        Next, let \(H\) be a bounded open subgroup of \(G\). Let 
+        \[N:=\inf_{(a_{i,j})\in H} \seten{\min_{1\le i,j \le 2}\{\nu(a_{i,j})\}}\]
+        which exists because \(H\) is bounded. Let \((\rho^{-N} x,\rho^{-N}y)^T\in \rho^{-N}\mathfrak o ^2\) and 
+        \(h\in H\). For \(h^{-1}=\p{\begin{smallmatrix}
+            a&b\\c&d
+        \end{smallmatrix}}\),
+        \[h^{-1}\begin{pmatrix}
+            \rho^{-N}x\\\rho^{-N}y
+        \end{pmatrix}=\begin{pmatrix}
+            a\rho^{-N}+b\rho^{-N}y\\c\rho^{-N}x+d\rho^{-N}y
+        \end{pmatrix}\]
+        we see that
+        \[\nu\p{a\rho^{-N}x+b\rho^{-N}y}\ge \min\p{\nu(a)+\nu(x),\nu(b)+\nu(y)}-N\ge 0\]
+        and likewise for \(c\rho^{-N}x+d\rho^{-N}y\), as \(H\) is bounded. We conclude \(\rho^{-N}\mathfrak o ^2\subseteq h\mathfrak o^2\).
+        It follows that \(\bigcap_{h\in H}h\mathfrak o^2\) is non-empty, and it is clearly stabilized by \(H\). Conversely, let \(\p{\begin{smallmatrix} ax+by\\cx+dy \end{smallmatrix}}\in \bigcap_{h\in H}h\mathfrak o^2\) with \(\nu(a),\nu(b),\nu(c),\nu(d)\ge N\) and \(x,y\in \mathfrak o\). In the case that \(N\ge 0\), we have that
+        \[\begin{pmatrix}ax+by\\cx+dy\end{pmatrix}=\begin{pmatrix}*\rho^{l_1}x+*\rho^{l_2}y\\ *\rho^{l_3}x+*\rho^{l_4}y\end{pmatrix}=\p{*\rho^{l_1+N}x+*\rho^{l_2+N}y}\begin{pmatrix}
+            \rho^{-N}\\0
+        \end{pmatrix}+\p{*\rho^{l_3+N}x+*\rho^{l_4+N}y}\begin{pmatrix}
+            0\\ \rho^{-N}
+        \end{pmatrix}\]
+        and as \(*\rho^{l_3+N}x+*\rho^{l_4+N}y\in \mathfrak o\) and \(*\rho^{l_1+N}x+*\rho^{l_2+N}y\in \mathfrak o\), we see \(\rho^{-N}\mathfrak o^2 \subseteq \bigcap_{h\in H}h\mathfrak o^2\subseteq \rho^{-N}\mathfrak o ^2\) and we are done. On the other hand if \(N<0\), define 
+        \[L:=\bigcap\left\{N \text{ a lattice and }N\supseteq \bigcap_{h\in H}h\mathfrak o^2\right\}\]
+    \end{proof}
+
+    %%
+    %    \[\begin{pmatrix}ax+by\\cx+dy\end{pmatrix}=\p{*\rho^{l_1-N}x+*\rho^{l_2-N}y}\begin{pmatrix}
+     %       \rho^{N}\\0
+    %    \end{pmatrix}+\p{*\rho^{l_3-N}x+*\rho^{l_4-N}y}\begin{pmatrix}
+    %        0\\ \rho^{N}
+    %    \end{pmatrix}\]
+    %    now with \(*\rho^{l_1-N}x+*\rho^{l_2-N}y\) and \(*\rho^{l_3-N}x+*\rho^{l_4-N}y\) in \(\mathfrak o\), so \(\bigcap_{h\in H}h\mathfrak o^2\) is \(\mathfrak o\)-spanned by \(\rho^N \mathfrak o^2\). For any \(\)
+    
+NOT DONE!!
+
+
+\begin{defn}\label{def:homothety}
+    For a lattice \(L\), we define the \textbf{homothety} class of \(L\) to be its equivalence class modulo similarity, that is the set of lattices \(\set{\rho^r L}{r\in \R}\), denoted by \(\llangle L \rrangle\). We denote the collection of homothety classes of \(\mathfrak o\)-lattices in \(\R_\rho\) by \(\lat(\mathfrak o,\R_\rho)\).
+\end{defn}
+
+Now given some lattice \(M\) and there is a basis \((e,f)\) of \(L\), by the Principal Divisor Theorem (\ref{cor:PDT}), we have a basis \((\rho^r e,\rho^s f)\) of \(M\) with \(r\le s \in \R\). Their difference \(s-r\) is an invariant of the similarity classes of \(L\) and \(M\), which we denote
+\[ \dist \p{\llangle L \rrangle, \llangle M \rrangle}=s-r.\]
+\begin{lemma}\label{lemma:wellDefinedDist}
+    The above is is well defined. 
+\end{lemma} 
+\begin{proof}
+    Let \(L,L'\in \llangle L \rrangle \) and \(M,M'\in \llangle M \rrangle\). Then \(\rho^l L=L'\) and \(\rho^m M= M'\) for \(m,l\in \R\). By the Principal Divisor Theorem, there exit bases \((e,f)\) and \((e',f')\) of \(L\) and \((\rho^l e',\rho^l f')\) of \(L'\) and \(s\ge r\in \R\) and \(s'\ge r'\in \R\) such that \((\rho^r e,\rho^s f)\) is a basis of \(M\) and \((\rho^{r'+l} e',\rho^{s'+l} f')\) is a basis of \(M'\). We note that as \((\rho^r e, \rho^s f)\) is a basis for \(M\), \((\rho^{r+m} e, \rho^{s+m} f)\) will be a basis for \(M'\).
+
+    FINISH ASAP!!!
+\end{proof}
+    
+\begin{thm}
+    \((\lat(\mathfrak o,\R_\rho),\dist)\) is an \(\R\)-metric space.
+\end{thm}
+I specify an \(\R\)-metric in keeping with the conventions surrounding \(\Lambda\)-trees for an arbitrary ordered abelian group \(\Lambda\). 
+\begin{proof}
+    Throughout the proof, let \(\llangle L \rrangle, \llangle M \rrangle \in \latt\), let \((e,f)\) be a basis of \(L\) and let  \(s\ge r\in \R\) such that \((\rho^r e,\rho^s f)\) is a basis of \(M\). That \(\dist\) is non-negative follows from the fact \(s\ge r\). Now if \(\llangle L\rrangle=\llangle M \rrangle\), for any representatives it will be the case that \(r=s\) so \(\dist(\llangle L\rrangle ,\llangle M \rrangle)=0\). Conversely, if \(\dist(\llangle L\rrangle ,\llangle M \rrangle)=0\) then for any representatives  \(L\) and \(M\) we will have that \(r=s\). Take \(M'=\rho^{-s}M \in \llangle M \rrangle \). Then \((\rho^{s-s}e, \rho^{r-s}f)\) is a basis for \(M'\), which is to say \(M'=L\) so \(\llangle L\rrangle = \llangle M \rrangle\). 
+    To show symmetry, see that if \((e,f)\) is a basis of \(L\) and \((\rho^r e, \rho^r f)\) a basis of \(M\), then
+    \[\dist(\llangle L\rrangle ,\llangle M \rrangle)=s-r=(-r)-(-s)=\dist(\llangle M\rrangle ,\llangle L \rrangle).\]
+    Finally to show the triangle inequality holds, let \(N\) be a lattice. Let \((g,h)\) be a basis of \(L\) and \(t\ge u\in \R\) such that \((\rho^u g,\rho^t h)\) is a basis of \(N\). Then
+    \[\dist(\llangle L \rrangle , \llangle N \rrangle )=t-u\]
+    
+    
+    
+\end{proof}
+
+
+    
+\section{\(\R\)-Tree}
+
+We briefly introduce the notion of \(\R\)-trees. For a more in depth treatment of \(\Lambda\)-trees, see \cite{Chiswell_2001}.
+
+A \textbf{segment} in a metric \((X,d)\) is the image of an isometry \(\alpha:[a,b]\to X\), where \([a,b]\) is the closed interval in \(\R\). We call \(\alpha(a)\) and \(\alpha(b)\) the endpoints which we say are joined by the segment. We say \((X,d)\) is \textbf{geodesic} if for all \(x,y\in X\), there is a segment connecting them, and \textbf{geodesically linear} if that segment is necessarily unique.
+
+\begin{defn}
+    An \(\R\)\textbf{-tree} is a metric space which is (i) geodesic, (ii) if any two segments of \((X,d)\) intersect at a single point, which is an endpoint of both, then their union is a segment, and (iii) the intersection of two segments which share an endpoint is also a segment.
+\end{defn}
+
+\begin{prop}
+    \(\R\)-trees are geodesically linear.
+\end{prop}
+\begin{proof}
+ THIS IS LEMMA 1.3.6 IN BOOK, ADD LATER
+\end{proof}
+
+\begin{thm}
+    \((\latt,\dist )\) is an \(\R\)-tree.
+\end{thm}
+Before we prove this theorem, it will help to clarify what we mean by a segment. Given lattices \(L\), with basis \((e,f)\) and \(M\) with basis \((\rho^r e, \rho^s f)\), the segment connecting the two here will pass through an infinite family of other (non-homothetical) lattices. In a Bruhat-Tits tree, you have edges. Here, the place of edges in taken by a continuum of classes lattices!
+\[
+\begin{tikzpicture}
+  % Main nodes
+  \node (M) at (0,0) {\(\llangle M\rrangle\)};
+  \node (L) at (2.5,-1) {\(\llangle L\rrangle\)};
+  \node (N) at (-1.5,-1.5) {\(\llangle N\rrangle\)};
+
+  % Branches from M
+  \node (M1) at (-1,1) {};
+  \node (M2) at (-1.5,0) {};
+
+  % Branches from L
+  \node (L1) at (3.5,-2) {};
+  \node (L2) at (4,-1) {};
+  \node (L3) at (3.5,0) {};
+
+  % Branches from L
+  \node (N1) at (-3,-1) {};
+  \node (N2) at (-3,-2) {};
+  
+
+  % Edges
+
+  \draw (M) -- (M1);
+  \draw (M) -- (M2);
+  \draw (M) -- (N);
+  \draw (N) -- (L);
+  \draw (N) -- (N1);
+  \draw (N) -- (N2);
+  \draw (L) -- (L1);
+  \draw (L) -- (L2);
+  \draw (L) -- (L3);
+\end{tikzpicture}
+\]
+
+\begin{proof}
+    Let \(\llangle L \rrangle , \llangle M \rrangle \in \latt\) and let \((e,f)\) be a basis of \(L\) such that \((\rho^r e, \rho^s f)\) is a basis of \(M\) with \(\)
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+
+
+MOTIVATION:
+In the Bruhat-Tits tree of a DVR, we define an edge between two nodes \(\llangle L \rrangle\) and \(\llangle M \rrangle\) exactly when \(\dist \p{\llangle L \rrangle : \llangle M \rrangle}=1\). This doesn't make sense when in the case of \(\R_\rho\) as 
+
+
+
+
+
+
+
+\begin{lemma}\label{lemma:action-preserves-edges}
+    The group action of \(\GL_2(\R_{\rho})\) preserves equivalences of lattices along with the lattice pair invariant. 
+\end{lemma}
+
+
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    
+
+
+\newpage
+
+\appendix
+
+\section{Constructing the Hyperreals} \label{section:ConstTheHRs}
+For the convenience of the reader, we outline the construction of the hyperreals numbers.
+\subsubsection{Ultrafilters}
+    A filter on a set, and even more so an ultrafilter, is a way of describing which subsets are `big' or `most' of your set.
+    \begin{defn}
+        Let \(X\) be a set. A \textbf{filter} \(\F\) on \(X\) is a subset \(\F\subseteq \Po(X) \) such that
+        \begin{enumerate}[label=(\roman*)]
+            \item \(X\in \F\) 
+            \item If \(A\in \F\) and \(A\subseteq B \subseteq X\), then \(B\in \F\).
+            \item If \(A,B\in \F\), then \(A\cap B\in \F\).
+        \end{enumerate}
+        If \(\emptyset \notin \F\), we say \(\F\) is \textbf{proper}. If in addition to the above,
+        \begin{enumerate}[label=(\roman*), resume]
+            \item \(\F\) is proper.
+            \item If \(A\subseteq X\), then exactly one of \(A\) or \(A^C:=X\setminus A\) is in \(\F\),
+        \end{enumerate}
+        we say \(\F\) is an \textbf{ultrafilter}.
+        Lastly, we say a filter is \textbf{maximal} if it is proper and not contained in any proper filter.
+    \end{defn}
+    The prototypal example of a filter on an infinite set \(X\) is the co-finite filter \(\F\) where \(A\in \F\) if and only if \(A^C\) is finite. Ultra filters come in two varieties: principal and non-principal. For any set \(X\), by choosing some \(x\in X\), we define the principal ultrafilter on \(X\) to be
+    \[\F_x:=\set{A\subseteq P(X)}{x\in A}\]
+    A principal ultrafilter has a minimal set, i.e. the singleton \(\{x\}\) which defines it. For a non-principal ultrafilter, we assume the Axiom of Choice in the form of Zorn's lemma.
+    \begin{prop}
+        For any infinite set \(X\), there exists a non-principal ultrafilter on \(X\).
+    \end{prop}
+    \begin{proof} 
+    First, we show every proper filter \(\F\) is contained in a maximal filter. Let \(\Omega(\F)\) be the set of proper filters on \(X\) which contain \(\F\), partially ordered by inclusion.  
+    Let \[\F\subseteq \F_1\subseteq \F_2 \subseteq \F_3 \subseteq \dots\]
+    be a chain of filters. We claim \(\bigcup_i \F_i\) is an upper bound of this chain. Clearly \(\emptyset \notin \bigcup_i \F_i\) and \(X\in \bigcup_i \F_i\) and \(\F\subseteq \bigcup_i \F_i\). For \(A,B\in \bigcup_i \F_i\), if \(A\subseteq C \subseteq X\), then there is an \(i\) such that  \(A\in \F_i\), thus \(C\in \F_i\subseteq \bigcup_i \F_i\). Similarly, there is some \(i\) such that \(A,B\in F_i\) so \(A\cap B\in \F_i \subseteq \bigcup_i \F_i\), thus each chain has an upper bound. By Zorn's lemma, there is a maximal element \(\U\) of \(\Omega(\F)\) with respect to inclusion.
+
+    Next we show \(\U\) is an ultrafilter. 
+    Assume not. Then there is some \(A\subseteq X\) such that neither or both \(A\) and \(A^C\) are in \(\U\). If both are in \(\U\), their intersection will be empty, contradicting that \(\U\) is proper. So assume neither are. If \(A\) is the empty set, then its complement is \(X\in \U\) so we are done. Otherwise, we construct a filter \(\F\) as follows:
+    \[\F:=\set{F\in \Po(X)}{F\in \U \text{ or there is some  } U \in \U \text{ such that }U\cap A \subseteq F  } \]
+    Note that for any \(U \in \U\), \(U\cap A\ne \emptyset\) as if it did, it would imply \(U\subseteq A^C\) which in turn would imply \(A^C\in \U\) which we assumed not to be the case.
+    
+    For \(V\in \F\), clearly if \(V \subseteq O \subseteq X\) then either \(V\in \U\) and so is \(O\), or there is some \(U\in U\) such that \(U\cap A\subseteq V \subseteq O\), so \(O\in \F\). If \(V,O\in \F\), then either \(V,O\in \U\) in which case \(V\cap O\in \U\subseteq \F\), and if neither \(V\) nor \(O\) is in \(\U\), then there are some \(U,U'\in \U\) such that \(U\cap A\subseteq V\) and \(U'\cap A \subseteq O\), so \((U\cap U')\cap A\subseteq V\cap O\) and we are done. Finally if one of \(V\) or \(O\) is in \(\U\), without loss of generality, assume \(V\in \U\), then there is some \(U\in \U\) such that \(U\cap A\subseteq O\), then so is \(U\cap V\in \U\) and \((U\cap V)\cap A\subset O\cap V\). We have also that \(X\in \F\), thus \(\F\) is a proper filter. Clearly \(\U\subseteq \F\). As \(A=A\cap X\in \F\) but \(A\notin \U\), we have \(\U\subsetneq \F \subsetneq X\) contradicting maximality. We conclude that \(\U\) is an ultrafilter. 
+
+    The final step of our argument is to notice that the co-finite cannot be contained in any principal ultrafilter \(\F_x\) as otherwise, \(\{x\}^C\) is co-finite so \(\{x\}^C\in \F_x\) and \(x\in \{x\}\in \F_x\).  Confirming what we set out to show.
+\end{proof}
+    Ultrapowers are a powerful tool with many applications, most of which we will not touch on. See \cite{kruckmannotes} for a brief introduction to the topic, or for a more rigorous treatment of some of their applications to Stone–Čech compactification, see \cite{Johnstone_1982}.
+\subsubsection{Ultraproducts}
+    While for our applications, we only need the cases of rings and fields, it is not much more trouble to state and prove definitions and theorems in their generality, and far more fun! In the following keep in the back of your mind that an ultrafilter is asserting which sets we are considering big.
+    \begin{defn}\label{defn:ultraproduct}
+        Let \(I\) be a set, \(\EL\) a language and \(\left\{\M_i=(M_i,\dots)\right\}_{i\in I}\) a collection of \(\EL\)-structures. Let \(\U\) be an ultrafilter on \(I\). The \textbf{ultraproduct} \(\M\) of \(\left\{\M_i\right\}_{i\in I}\) by \(\U\), denoted
+        \[\M=\prod_{i\in I}\M_i \big/\U\]
+        is the \(\EL\)-structure defined as follows:
+        \begin{enumerate}[label=(\roman*)]
+            \item As a set \label{defn:ultraproduct:set}\(M=\prod_{i\in I}M_i \big/\sim\), where \((a_i)\sim (b_i)\) iff \(\set{i}{a_i=b_i}\in \U\). We denote the equivalence class of \((a_i)\) by \([(a_i)]\).
+            \item \label{defn:ultraproduct:const}If \(c\) is a constant symbol, then \(c^M=\left[\p{c^{M_i}}\right]\).
+            \item \label{defn:ultraproduct:function}Let \(f\in \EL\) be an \(n\)-ary function symbol. Then 
+            \[f^M\p{ \left[(a_{i,1})\right],\left[(a_{i,2})\right],\dots,\left[(a_{i,n})\right]}=\left[ \p{f^{M_i}\p{a_{i,1},a_{i,2},\dots ,a_{i,n}} }\right].\]
+            \item \label{defn:ultraproduct:relation}If \(R\) is an \(n\)-ary relation symbol,
+            \[\p{\left[(a_{i,1})\right],\left[(a_{i,2})\right],\dots,\left[(a_{i,n})\right]}\in R^M \quad\text{iff}\quad  \set{i}{\p{a_{i,1},a_{i,2},\dots ,a_{i,n}}\in R^{M_i}}\in \U.\]
+        \end{enumerate}
+    \end{defn}
+    \begin{prop}
+        The above is well defined.
+    \end{prop}
+    \begin{proof}
+        It it clear that \(~\) defines an equivalence relation.  For the following, let \((a_{i,j})_{i\in I}\sim (b_{i,j})_{i\in I}\) for \(j=1,\dots,n\). We first show \ref{defn:ultraproduct:function}. Let \(f\) be an an \(n\)-ary function symbol. See that
+        \[
+            \set{i}{f^{M_i}\p{a_{i,1},\dots a_{i,n}}=f^{M_i}\p{(b_{i,1},\dots b_{i,n}}}\supseteq \bigcap_{j=1}^n\set{i}{a_{i,j}=b_{i,j}}.
+       \]
+       By assumption, \((a_{i,j})\sim (b_{i,j})\) so we have  \(\set{i}{a_{i,j}=b_{i,j}}\in \U\) for each \(j\). Thus their finite intersection will be in \(\U\), and so will any superset, thus \(f^M\) agrees on equivalence classes.
+
+       To show \ref{defn:ultraproduct:relation}, let \(R\) be a relation symbol. Then
+       \begin{align*}\p{(a_{i,1}),(a_{i,2}),\dots,(a_{i,n})}\in R^M &\iff \set{i}{\p{a_{i,1},a_{i,2},\dots ,a_{i,n}}\in R^{M_i}}\in \U\\
+       &\  \implies {\bigcap_{j=1}^n\set{i}{a_{i,j}=b_{i,j}}} \cap \set{i}{\p{a_{i,1},a_{i,2},\dots ,a_{i,n}}\in R^{M_i}}\in \U
+       \end{align*}
+       but we have that
+       \[\U \ni {\bigcap_{j=1}^n\set{i}{a_{i,j}=b_{i,j}}} \cap \set{i}{\p{a_{i,1},a_{i,2},\dots ,a_{i,n}}\in R^{M_i}}\subseteq \set{i}{\p{b_{i,1},b_{i,2},\dots ,b_{i,n}}\in R^{M_i}} \]
+       so \(\p{(b_{i,1}),(b_{i,2}),\dots,(b_{i,n})}\in R^M\) and we are done.
+    \end{proof}
+    This is a remarkably powerful construction as is demonstrated by the following theorem:
+    \begin{thm}[Łoś] \label{thm:los} Let \(\{M_i\}_i\) be a collection of \(\EL\)-structures.
+        ...
+    \end{thm}
+
+    
+
+\subsubsection{Constructing and First Properties}
+    AN ALTERNATIVE WAY TO THINK ABOUT THE ABOVE IN TERMS OF IDEALS.
+
+    THEN FINISH !!!! holy shit
+
+
+    \begin{corollary}[The Transfer Principle]\label{cor:transfer}
+        
+    \end{corollary}
+    
+
+
+\printbibliography
+\end{document}
+
+
+
+
+
+
+\[a_{1,1}b_{1,1}+a_{1,2}b_{2,1}=a_{2,1}b_{1,2}+a_{2,2}b_{2,2}=1\]
+
+
+
+
+
+\subsection{Some Applications of the Hyperreals}
+    I will now prove a result which is by no means new, however we show this result in a fundamentally non-standard analytic way, which the author finds quite satisfying.  
+\begin{thm}\label{thm:homRtoC}
+    The continuous group homomorphism from \(\R\to \C^\times\) are given by
+    \[\mathrm{Hom}_{\mathrm{cont}}\p{\R,\C^\times}=\set{
+    \exp(\lambda x)}{\lambda\in \C}.\]
+\end{thm}
+\begin{proof}
+    Let \(\phi\) be a continuous group homomorphism as described. We first aim to show \(\phi\) is differentiable, that is for any infinitesimals \(\epsilon,\ \delta\),
+        \[\st \p{\frac{{^*\phi}(x+\epsilon)-{^*\phi} (x)}{\epsilon}}=\st \p{ \frac{{^*\phi}(x+\epsilon)-{^*\phi} (x)}{\delta}}\]
+    which reduces to:
+    \[{^*\phi}(x) \st \p{\frac{{^*\phi}(\epsilon)-{^*\phi} (0)}{\epsilon}}={^*\phi}(x) \p{\st \frac{{^*\phi}(\epsilon)-{^*\phi} (0)}{\delta}} \iff \frac{{^*\phi}(\epsilon)-1}{\epsilon}\simeq \frac{{^*\phi}(\delta)-1}{\delta}\]
+    With this in mind, we need only consider the derivative of \(\phi\) at \(0\), as the above shows this implies differentiability everywhere. We prove the claim that \({\phi}\) is differentiable, as this implies \(\phi\) satisfies \(\phi'(x)=\phi'(0)\phi(x)\), and as its a group hom, \(\phi(0)=1\), so clearly \(\phi(x)=\exp{(x \phi(0))}\). We now prove the claim. First, note that for all \(n\in \N\), \(\phi(x)=\phi\p{x/n}^n\). It follows that
+    \[ \phi(x)-1=\phi\p{x/n}^n-1=\p{\phi(x/n)-1}\sum_{i=0}^{n-1}\phi(x/n)^i=\p{\phi(x/n)-1}\frac{n}{x}\sum_{i=0}^{n-1}\frac{x}{n}\phi(x/n)^i\]
+    As this is a first order property of \(n\), we can interpret the above in \({^*\mathcal{R}}\), and taking \(m\) to be an infinite hypernatural. Then we have that:
+    \[{^*\phi}(x)-1=\p{{^*\phi}(x/m)-1}\frac{m}{x}\sum_{i=0}^{m-1}\frac{x}{m}{^*\phi}(x/m)^i.\]
+    The astute reader will notice that the sum in the above is a Riemann sum. Furthermore, as \(\phi\) is assumed to be continuous, it is Riemann integrable on any bounded set, thus we see the above can be safely rewritten as
+    \[{^*\phi}(x)-1\simeq\p{{^*\phi}(x/m)-1}\frac{m}{x}\int_{0}^x \phi(t) dt\]
+    taking care to change the `\(=\)' sign to  `\(\simeq\)' as the integral is in actuality the standard part of the above sum. \note{this might not be correct, the integral will be the above plus an infinitesimal, i am not positive it wont fuck up the whole side, although as the other side is bounded i *think* its fine} 
+    Solving for the integral, we get:
+    \[\frac{x\p{{^*\phi}(x)-1}}{m\p{{^*\phi}(x/m)-1}} \simeq \int_{0}^x \phi(t) dt\]
+    As the right hand side is the integral of a continuous function, by the Fundamental Theorem of Calculus, we know it can be differentiated (see \cite{Goldblatt_1998}, Theorem 9.4.1). Let \(\epsilon\simeq 0\) and see
+    \[{^*\phi}(x)\simeq \frac{\frac{(x+\epsilon)\p{{^*\phi}(x+\epsilon)-1}}{m\p{{^*\phi}((x+\epsilon)/m)-1}}-\frac{x\p{{^*\phi}(x)-1}}{m\p{{^*\phi}(x/m)-1}}}{\epsilon}.\]
+    We evaluate at \(x=0\). For clarity, let \(p=(\phi(\epsilon)-1)/\epsilon\). We compute as follows:
+    \begin{align*}
+        {^*\phi(1)}m &\simeq \frac{\frac{(1+\epsilon)\p{{^*\phi}(1+\epsilon)-1}}{\p{{^*\phi}((1+\epsilon)/m)-1}}-\frac{\p{{^*\phi}(1)-1}}{\p{{^*\phi}(1/m)-1}}}{\epsilon}\\
+        & \simeq \frac{(1+\epsilon)\p{{^*\phi}(1+\epsilon)-1}}{\epsilon \p{{^*\phi}((1+\epsilon)/m)-1}}-\frac{{{^*\phi}(1)-1}}{\epsilon \p{{^*\phi}(1/m)-1}}\\
+        & \simeq \frac{{^*\phi}(1+\epsilon)-1+\epsilon {^*\phi}(1+\epsilon) -\epsilon }{\epsilon \p{{^*\phi}((1+\epsilon)/m)-1}}-\frac{{^*\phi}(1)-1}{\epsilon \p{{^*\phi}(1/m)-1}}\\
+        {^*\phi}(1)\frac{{^*\phi}(1/m)-1}{1/m} &\simeq  \frac{{^*\phi}(1+\epsilon)-1+\epsilon {^*\phi}(1+\epsilon) -\epsilon }{\epsilon \p{{^*\phi}((1+\epsilon)/m)-1}}-\frac{{^*\phi}(1)-1}{\epsilon }\\
+        \frac{{^*\phi}(1/m)-1}{1/m} &\simeq \frac{{^*\phi}(\epsilon)-{^*\phi}(-1)+\epsilon {^*\phi}(\epsilon) -\epsilon{^*\phi}(-1) }{\epsilon \p{{^*\phi}((1+\epsilon)/m)-1}}-\frac{{^*\phi}(0)-{^*\phi}(1)}{\epsilon }\\
+        &\simeq \frac{{^*\phi}(\epsilon)-{^*\phi}(-1)+\epsilon {^*\phi}(\epsilon) -\epsilon{^*\phi}(-1) }{\epsilon \p{{^*\phi}((1+\epsilon)/m)-1}}-\frac{{^*\phi}((1+\epsilon)/m)-{^*\phi}((1+\epsilon+m)/m)-1+{^*\phi}(1)}{\epsilon \p{{^*\phi}((1+\epsilon)/m)-1}}\\
+        & \simeq \frac{{^*\phi}(\epsilon)-{^*\phi}(-1)+\epsilon {^*\phi}(\epsilon) -\epsilon{^*\phi}(-1) - {^*\phi}((1+\epsilon)/m)+{^*\phi}((1+\epsilon+m)/m)+1-{^*\phi}(1)}{\epsilon \p{{^*\phi}((1+\epsilon)/m)-1}}\\
+        & \simeq \frac{{^*\phi}(\epsilon)\p{1+\epsilon } -{^*\phi}(-1) -\epsilon{^*\phi}(-1) - {^*\phi}((1+\epsilon)/m)+{^*\phi}(1)\p{{^*\phi}((1+\epsilon)/m)-1}+1}{\epsilon \p{{^*\phi}((1+\epsilon)/m)-1}}\\
+    \end{align*}
+    
+    
+\end{proof}
+
+
+
+
+ \simeq \frac{\p{{^*\phi}(1){^*\phi}(\epsilon)-1}}{\epsilon \p{{^*\phi}(1/m){^*\phi}(\epsilon/m)
+        -1}}+ \frac{\p{{^*\phi}(1){^*\phi}(\epsilon)-1}}{ \p{{^*\phi}(1/m){^*\phi}(\epsilon/m)
+        -1}}-\frac{\p{{^*\phi}(1)-1}}{\epsilon \p{{^*\phi}(1/m)-1}}
+
+
+
+
+
